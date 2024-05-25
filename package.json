@@ -4,8 +4,8 @@
   "description": "Detta är ditt projekts GitLab-projekt och här hittar du bland annat Wikin i vilken du ska dokumentera ditt projekt. Du hittar länk till din Wiki i menyn till vänster.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "nodemon server.js",
+    "dev": "npx nodemon server.js",
+    "start": "npx nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,5 +20,5 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.1",
     "nodemon": "^3.1.0"
-    }
+  }
 }
