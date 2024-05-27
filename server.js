@@ -57,6 +57,10 @@ app.put('/cars/:id', requireAuth, carsController.updateCar)
 //deleting car
 app.delete('/cars/:id', requireAuth, carsController.deleteCar)
 
+app.get('/health', (req, res) => {
+    res.send('OK');
+})
+
 // Start our server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
