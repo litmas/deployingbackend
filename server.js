@@ -57,5 +57,8 @@ app.put('/cars/:id', requireAuth, carsController.updateCar)
 //deleting car
 app.delete('/cars/:id', requireAuth, carsController.deleteCar)
 
-//start our server
-app.listen(process.env.PORT)  
+// Start our server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
+})
