@@ -11,6 +11,8 @@ const connectToDB = require('./config/connecttoDB')
 const carsController = require('./controllers/carController')
 const userController = require('./controllers/userController')
 const requireAuth = require('./middleware/requireAuth')
+require('dotenv').config()
+
 //create an express app
 const app = express()
 
