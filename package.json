@@ -4,11 +4,11 @@
   "description": "Detta är ditt projekts GitLab-projekt och här hittar du bland annat Wikin i vilken du ska dokumentera ditt projekt. Du hittar länk till din Wiki i menyn till vänster.",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon server.js",
-    "start": "npx nodemon server.js",
-    "build": "npm install dotenv && npm run start",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "build": "npm install && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
