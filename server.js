@@ -40,22 +40,22 @@ app.post('/login', userController.login)
 app.get('/logout', userController.logout)
 
 // using middleware to check authorization
-app.get('/check-auth', requireAuth, userController.checkAuth)
+app.get('/check-auth', userController.checkAuth)
 
 //fetching cars
 app.get('/cars', carsController.fetchCars)
 
 //fetching a single car
-app.get('/cars/:id', requireAuth, carsController.fetchOneCar)
+app.get('/cars/:id', carsController.fetchOneCar)
 
 //creating car
-app.post('/cars', requireAuth, carsController.createCar)
+app.post('/cars', carsController.createCar)
 
 //updating car
-app.put('/cars/:id', requireAuth, carsController.updateCar)
+app.put('/cars/:id', carsController.updateCar)
 
 //deleting car
-app.delete('/cars/:id', requireAuth, carsController.deleteCar)
+app.delete('/cars/:id', carsController.deleteCar)
 
 app.get('/health', (req, res) => {
     res.send('OK');
