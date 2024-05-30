@@ -1,65 +1,68 @@
-// Load environment variables
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
+//load env variables
+if (process.env.NODE_ENV != 'production') {
+    require('dotenv').config()
 }
 
-// Import dependencies
-const express = require('express');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const connectToDB = require('./config/connectToDB');
-const carsController = require('./controllers/carController');
-const userController = require('./controllers/userController');
-const requireAuth = require('./middleware/requireAuth');
+// import dependencies
+const express = require('express')
+const cors = require('cors')
+const cookieParser  =require('cookie-parser')
+const connectToDB = require('./config/connecttoDB')
+const carsController = require('./controllers/carController')
+const userController = require('./controllers/userController')
+const requireAuth = require('./middleware/requireAuth')
+require('dotenv').config()
 
-// Create an express app
-const app = express();
+//create an express app
+const app = express()
 
-// Configure express app
-app.use(express.json());
-app.use(cookieParser());
+//configure express app
+app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
-    origin: 'https://bilcentertrekanten.netlify.app', // Frontend URL
-    credentials: true // Allow credentials (cookies) to be sent
-}));
+    origin: true,
+    credentials: true 
+}))
 
-// Connect to database
-connectToDB();
+//connect to database
+connectToDB()
 
-// Routing
-// Signing up
-app.post('/signup', userController.signup);
+// routing      
+// Now I have a CRUD application I guess
 
-// Logging in
-app.post('/login', userController.login);
+//signing up
+app.post('/signup', userController.signup)
 
-// Logging out
-app.get('/logout', userController.logout);
+//logging in
+app.post('/login', userController.login)
 
-// Using middleware to check authorization
-app.get('/check-auth', requireAuth, userController.checkAuth);
+//logging out
+app.get('/logout', userController.logout)
 
-// Fetching cars
-app.get('/cars', carsController.fetchCars);
+// using middleware to check authorization
+app.get('/check-auth', requireAuth, userController.checkAuth)
 
-// Fetching a single car
-app.get('/cars/:id', requireAuth, carsController.fetchOneCar);
+//fetching cars
+app.get('/cars', carsController.fetchCars)
 
-// Creating car
-app.post('/cars', requireAuth, carsController.createCar);
+//fetching a single car
+app.get('/cars/:id', requireAuth, carsController.fetchOneCar)
 
-// Updating car
-app.put('/cars/:id', requireAuth, carsController.updateCar);
+//creating car
+app.post('/cars', requireAuth, carsController.createCar)
 
-// Deleting car
-app.delete('/cars/:id', requireAuth, carsController.deleteCar);
+//updating car
+app.put('/cars/:id', requireAuth, carsController.updateCar)
+
+//deleting car
+app.delete('/cars/:id', requireAuth, carsController.deleteCar)
 
 app.get('/health', (req, res) => {
     res.send('OK');
-});
+})
 
 // Start our server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+    console.log(`Server is running on port ${PORT}`)
+})
