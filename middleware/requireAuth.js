@@ -1,35 +1,38 @@
-const jwt = require('jsonwebtoken')
-const User = require('../models/userModel')
+const jwt = require('jsonwebtoken');
+const User = require('../models/userModel');
 
-//
 async function requireAuth(req, res, next) {
     try {
-    // read token from cookies
-    const token = req.cookies.Authorization
-    
-    // decode the token
-    const decoded = jwt.verify(token, process.env.SECRET)
+        // Read token from cookies
+        const token = req.cookies.Authorization;
 
-    //check expiration
-    if (Date.now() > decoded.exp) {
-        return res.sendStatus(401)
-    }
+        if (!token) {
+            return res.sendStatus(401);
+        }
 
-    // find user using decodedd sub
-    const user = await User.findById(decoded.sub)
+        // Decode the token
+        const decoded = jwt.verify(token, process.env.SECRET);
 
-    if (!user) {
-        return res.sendStatus(401)
-    }
+        // Check expiration (exp is in seconds, Date.now() is in milliseconds)
+        if (Date.now() >= decoded.exp * 1000) {
+            return res.sendStatus(401);
+        }
 
-    // attatch user to request
-    req.user = user
+        // Find user using decoded.sub
+        const user = await User.findById(decoded.sub);
 
-    // continue
-    next()
-    } catch(error) {
-        return res.sendStatus(401)
+        if (!user) {
+            return res.sendStatus(401);
+        }
+
+        // Attach user to request
+        req.user = user;
+
+        // Continue
+        next();
+    } catch (error) {
+        return res.sendStatus(401);
     }
 }
 
-module.exports = requireAuth 
+module.exports = requireAuth;
