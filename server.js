@@ -40,7 +40,7 @@ app.post('/login', userController.login)
 app.get('/logout', userController.logout)
 
 // using middleware to check authorization
-app.get('/check-auth', userController.checkAuth)
+app.get('/check-auth', requireAuth, userController.checkAuth)
 
 //fetching cars
 app.get('/cars', carsController.fetchCars)
