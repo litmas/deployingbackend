@@ -4,19 +4,28 @@ const jwt = require('jsonwebtoken')
 
 async function signup(req, res) {
     try {
-    //get the email and password from req body
-    const {email, password} = req.body
-    
-    //hash password
-    const hashedPassword = bcrypt.hashSync(password, 10)
+        // Check the current number of users
+        const userCount = await User.countDocuments()
+        if (userCount >= 3) {
+            return res.status(400).send("Maximum number of accounts reached.")
+        }
 
-    //create a user with the data
-    await User.create({email, password: hashedPassword})
-    //respond
-    res.sendStatus(200)
-    } catch(error) {
+        // Get the email and password from req body
+        const { email, password } = req.body
+
+        // Hash password
+        const hashedPassword = bcrypt.hashSync(password, 10)
+
+        // Create a user with the data
+        await User.create({ email, password: hashedPassword })
+
+        // Respond
+        res.sendStatus(200)
+    } catch (error) {
+
+
         console.log('BLUP BLUP PULL UP', error)
-       res.sendStatus(400)
+        res.sendStatus(400)
     }
 }
 
